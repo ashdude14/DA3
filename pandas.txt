@@ -1,0 +1,50 @@
+import pandas as pd
+
+mydataset = {
+  'cars': ["BMW", "Volvo", "Ford"],
+  'passings': [3, 7, 2]
+}
+a = [1, 7, 2]
+
+data = {
+  "calories": [420, 380, 390],
+  "duration": [50, 40, 45]
+}
+
+myvar=pd.DataFrame(mydataset)
+
+#print(myvar)
+#print(pd.Series(a,index=["x","y","z"])["y"])
+#print(pd.DataFrame(data))
+# locate 
+df=pd.DataFrame(data)
+
+#print(df.loc[0])
+#print(df.loc[[0,1]])
+
+# add row index
+
+row=pd.DataFrame(data,index=["x","y","z"])
+
+#print(row.loc["z"])
+
+#import data from file
+
+#importDATA=pd.read_csv("file_name")
+
+#print(importDATA.to_string())
+
+# To check system maximum rows
+
+#print(pd.options.display.max_rows)  #60 if dataframe>60 will print only first 5 rows and last 5 rows
+#to increase to your requirements
+#pd.options.display.max_rows=90000;
+#print(pd.options.display.max_rows)
+
+'''
+Reading the JSON data
+
+df=pd.read_json('fileName.json')
+
+print(df.to_string())
+'''
