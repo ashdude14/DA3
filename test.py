@@ -1,39 +1,41 @@
 import requests  # type: ignore
-from bs4 import BeautifulSoup # type: ignore
+from bs4 import BeautifulSoup  # type: ignore
 
-url_batting="https://www.espncricinfo.com/records/tournament/batting-most-runs-career/icc-men-s-t20-world-cup-2024-15946"
+# URL for the batting stats page
+url_batting = "https://www.espncricinfo.com/records/tournament/batting-most-runs-career/icc-men-s-t20-world-cup-2024-15946"
 
-response=requests.get(url_batting).text
+# Fetch HTML response
+response = requests.get(url_batting).text
+soup = BeautifulSoup(response, "html.parser")
 
-soup=BeautifulSoup(response,"html.parser")
-name=soup.find_all(class_="ds-text-tight-s ds-font-regular ds-text-typo-primary hover:ds-text-typo-primary-hover ds-block")
+# Find all <tr> elements
+rows = soup.find_all("tr")
 
-scoreText=soup.find_all(class_="ds-min-w-max ds-text-right")
-count=0
+# Function to save data to file
 def saveData(path, text):
     with open(path, "a") as f:  # Open file in append mode
-        f.write(text + "\n")
+        f.write(text)
 
-for t in scoreText :
- #print(t.text)
- saveData("data.csv",t.text+" ")
- count+=1 
-print(count/14)
+# Variables to handle data batching
+batch = []
+batch_size = 15
 
-for t in name :
-   saveData("name.csv",t.text+" ")
-# Combine and save data
-# count = 0
-# for div, text in zip(scoreDiv, scoreText):  # Combine corresponding elements
-#     combined_text = f"{div.text.strip()} - {text.text.strip()}"  # Format data
-#     saveData("data.csv", combined_text)  # Save to file
-#     count += 1
+# Extract and save data from each <tr>
+for row in rows:
+    cells = row.find_all("td")  # Find all <td> elements in the row
+    if cells:
+        # Get text from each cell and extend the batch
+        row_data = [cell.text.strip() for cell in cells]
+        batch.extend(row_data)
 
-# print(f"Data saved for {count} records.")
+        # If batch reaches the required size, save to file
+        if len(batch) >= batch_size:
+            saveData("batters_data.csv", ",".join(batch[:batch_size]) + "\n")  # Save first 15 items
+            batch = batch[batch_size:]  # Remove saved items from batch
 
+# Save remaining data if batch is not empty
+if batch:
+    saveData("data.csv", ", ".join(batch) + "\n")
 
-
-# if response.status_code==200:
-#    print(response.text)
-
+print("Data saved successfully.")
 
