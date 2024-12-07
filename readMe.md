@@ -23,7 +23,11 @@ This project analyzes cricket data from the T20 World Cup to identify top-perfor
    - **Specialist Bowlers**: Based on economy rate and wicket-taking ability.
 2. Enabled visualization of team strengths and weaknesses with Power BI.
 3. Helped uncover trends and patterns that influence match outcomes.
+![dashboard](db1.png)
+![dashboard](db2.png)
 
+## Data Set Structure
+![dataset](dataP.png)
 ## Dashboard Highlights
 - **Player Metrics:** Visualized strike rate, average, and economy rate across matches.
 - **Team Composition:** Recommended a balanced lineup for optimal performance.
